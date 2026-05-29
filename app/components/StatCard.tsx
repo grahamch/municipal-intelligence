@@ -8,7 +8,7 @@ export default function StatCard({label, value, valueColour = "text-gray-900"}: 
     return (
         <div className="bg-white rounded-lg p-6 shadow-sm">
             <p className="text-sm text-gray-500">{label}</p>
-            <p className={`text-2x1 font-bold ${valueColour}`}>{value}</p>
+            <p className={`text-2xl font-bold ${valueColour}`}>{value}</p>
         </div>
     )
 }
