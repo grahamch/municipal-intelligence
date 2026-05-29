@@ -33,10 +33,10 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
       <nav className="bg-white border-b border-gray-200 px-8 py-4">
     <div className="max-w-4xl mx-auto flex items-center justify-between">
-      <span className="font-bold text-gray-900">Municipal Intelligence</span>
+      <span className="font-bold text-gray-900">Property Portfolio</span>
       <div className="flex gap-6">
-        <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">Dashboard</Link>
-        <Link href="/bills" className="text-sm text-gray-600 hover:text-gray-900">Bills</Link>
+        <Link href="/practice" className="text-sm text-gray-600 hover:text-gray-900">Dashboard</Link>
+        <Link href="/practice/properties" className="text-sm text-gray-600 hover:text-gray-900">Properties</Link>
       </div>
     </div>
   </nav>
