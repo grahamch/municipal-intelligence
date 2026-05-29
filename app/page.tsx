@@ -11,8 +11,8 @@ export default function Home() {
           Detecting billing errors across South African municipalities.
         </p>
         <div className="mt-8 grid grid-cols-3 gap-4">
-          <StatCard label="Bills Analyzed" value="0" />
-          <StatCard label="Errors Detected" value="0" valueColour="text-red-600"/>
+          <StatCard label="Bills Analysed" value="0" />
+          <StatCard label="Errors Detected" value="0" valueColour="text-red-600" />
           <StatCard label="Amount Recoverable" value="R0" valueColour="text-green-600" />
         </div>
       </div>
