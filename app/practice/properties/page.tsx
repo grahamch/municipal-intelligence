@@ -3,6 +3,7 @@
 import { useState } from "react"
 
 interface Property {
+  id: number
   name: string
   address: string
   amount: number
@@ -18,7 +19,8 @@ export default function PropertyPage() {
 
   const addTestProperty = () => {
     const newProperty: Property = {
-      name: "Prtoperty name" + 1,
+      id: properties.length + 1,
+      name: "Prtoperty name" + (properties.length + 1),
       address: "42 Sea Glade, 12 Milner Avenue, Hout Bay, Cape Town, 7806",
       amount: 2340.50,
       status: "current"
@@ -40,7 +42,7 @@ export default function PropertyPage() {
         </div>
         <div className="mt-8 space-y-4">
           {properties.map(property => (
-            <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div key={property.id} className="bg-white rounded-lg p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium text-gray-900">{property.name}</p>
@@ -48,7 +50,7 @@ export default function PropertyPage() {
                 </div>
                 <div className="text-right">
                   <p className="font-medium text-gray-900">R{property.amount}</p>
-                  <p className="text-sm text-blue-600">{property.status}</p>
+                  <p className={`text-sm ${property.status === "arrears" ? "text-red-600" : "text-green-600"}`}>{property.status}</p>
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { checkIsAppPPREnabled } from "next/dist/server/lib/experimental/ppr"
+import { useState, useEffect } from "react"
 
 interface Bill {
   id: number
@@ -8,20 +9,47 @@ interface Bill {
   period: string
   amount: number
   status: "pending" | "analysed" | "error"
+  readType: "actual" | "estimated" | "final"
+}
+
+interface CheckResult {
+  accountNumber: string
+  checks: {
+    estimatedRead: {
+      passed: boolean
+      message: string
+    }
+  }
 }
 
 export default function BillsPage() {
   const [bills, setBills] = useState<Bill[]>([])
+  const [checkResult, setCheckResult] = useState<CheckResult | null>(null)
 
-  const addTestBill = () => {
+   const addTestBill = () => {
     const newBill: Bill = {
       id: bills.length + 1,
       municipality: "City of Cape Town",
       period: "2026-04",
       amount: 2340.50,
-      status: "pending"
+      status: "pending",
+      readType: "estimated"
     }
     setBills([...bills, newBill])
+    checkBill(newBill)
+  }
+
+  const checkBill = async (bill: Bill) => {
+    const response = await fetch("/api/check-bill", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        accountNumber: `CHE00${bill.id}`,
+        readType: bill.readType
+      })
+    })
+    const result = await response.json()
+    setCheckResult(result)
   }
 
   return (
@@ -55,6 +83,17 @@ export default function BillsPage() {
             <p className="text-gray-500 text-center py-12">No bills uploaded yet.</p>
           )}
         </div>
+        {checkResult && (
+          <div className="mt-8 bg-white rounded-lg p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">Latest Check Result</h2>
+            <p className="text-sm text-gray-500">Account: {checkResult.accountNumber}</p>
+            <div className="mt-2">
+              <p className={`text-sm font-medium ${checkResult.checks.estimatedRead.passed ? "text-green-600" : "text-red-600"}`}>
+                Estimated Read: {checkResult.checks.estimatedRead.message}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   )
