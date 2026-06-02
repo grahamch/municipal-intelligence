@@ -1,0 +1,20 @@
+create table billing_lines (
+  id bigint generated always as identity primary key,
+  bill_id bigint references bills(id),
+  description varchar not null,
+  meter_number varchar,
+  meter_type varchar,
+  unit varchar,
+  multiply_factor numeric default 1,
+  previous_reading numeric,
+  current_reading numeric,
+  read_type varchar,
+  consumption numeric,
+  rate numeric not null,
+  amount numeric not null,
+  vat_applicable boolean not null,
+  vat_rate decimal(5,4),
+  line_period_start date,
+  line_period_end date,
+  created_at timestamptz default now()
+);
