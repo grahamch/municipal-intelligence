@@ -211,8 +211,10 @@ create table check_results (
   billing_line_id   bigint references billing_lines(id),
   check_type        varchar not null,
   passed            boolean not null,
-  severity          varchar not null,        -- info / warning / error
+  severity          varchar not null,
   message           varchar not null,
+  calculated_amount numeric,
+  billed_amount     numeric,
   amount_in_dispute numeric,
   created_at        timestamptz default now()
 );
